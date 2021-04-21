@@ -254,4 +254,10 @@ describe('GET /api/items', () => {
       expect(item.category_name).toBe('Electronics');
     });
   });
+  it('404 - for a non-existent category_name', async () => {
+    const { body } = await request(app)
+      .get('/api/items?category_name=Missing')
+      .expect(404);
+    expect(body.msg).toBe('category not found');
+  });
 });
