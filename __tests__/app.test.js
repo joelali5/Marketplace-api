@@ -220,4 +220,8 @@ describe('GET /api/items', () => {
       );
     });
   });
+  it('200 - items are sorted by item name by default', async () => {
+    const { body } = await request(app).get('/api/items').expect(200);
+    expect(body.items).toBeSortedBy('item_name');
+  });
 });
