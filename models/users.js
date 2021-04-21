@@ -14,7 +14,7 @@ exports.selectUserByUsername = async (username) => {
     .with('users_basket', (query) => {
       return query
         .select('username')
-        .count('basket_id AS items_in_basket')
+        .count('basket_id')
         .from('baskets')
         .where('username', username)
         .groupBy('baskets.username');
@@ -22,15 +22,19 @@ exports.selectUserByUsername = async (username) => {
     .with('users_orders', (query) => {
       return query
         .select('username')
-        .count('order_id AS items_ordered')
+        .count('order_id')
         .from('orders')
         .where('username', username)
         .groupBy('orders.username');
     })
-    .select('users.*', 'items_in_basket', 'items_ordered')
+    .select(
+      'users.*',
+      db.raw('COALESCE(users_basket.count, 0)::float AS items_in_basket'),
+      db.raw('COALESCE(users_orders.count, 0)::float AS items_ordered')
+    )
     .from('users')
-    .join('users_basket', 'users.username', '=', 'users_basket.username')
-    .join('users_orders', 'users.username', '=', 'users_orders.username')
+    .leftJoin('users_basket', 'users.username', '=', 'users_basket.username')
+    .leftJoin('users_orders', 'users.username', '=', 'users_orders.username')
     .where('users.username', username)
     .first();
 

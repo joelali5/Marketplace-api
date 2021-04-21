@@ -122,7 +122,7 @@ describe('GET /api/users/:username', () => {
     const { body } = await request(app).get('/api/users/Paul-R').expect(200);
     expect(body.user).toEqual(
       expect.objectContaining({
-        items_in_basket: '2',
+        items_in_basket: 2,
       })
     );
   });
@@ -130,7 +130,16 @@ describe('GET /api/users/:username', () => {
     const { body } = await request(app).get('/api/users/Paul-R').expect(200);
     expect(body.user).toEqual(
       expect.objectContaining({
-        items_ordered: '1',
+        items_ordered: 1,
+      })
+    );
+  });
+  it('200 - responds with 0 if the user has no orders or items in their basket', async () => {
+    const { body } = await request(app).get('/api/users/Ant').expect(200);
+    expect(body.user).toEqual(
+      expect.objectContaining({
+        items_ordered: 0,
+        items_in_basket: 0,
       })
     );
   });
