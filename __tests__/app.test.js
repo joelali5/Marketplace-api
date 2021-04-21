@@ -181,4 +181,13 @@ describe('PATCH /api/users/:username', () => {
       })
     );
   });
+  it('400 - invalid body', async () => {
+    const { body } = await request(app)
+      .patch('/api/users/Paul-R')
+      .send({
+        kudos_inc: 1.5,
+      })
+      .expect(400);
+    expect(body.msg).toBe('kudos_inc must be an integer');
+  });
 });
