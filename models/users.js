@@ -10,7 +10,7 @@ exports.insertUser = async (newUser) => {
 };
 
 exports.selectUserByUsername = async (username) => {
-  return db
+  const user = await db
     .with('users_basket', (query) => {
       return query
         .select('username')
@@ -37,6 +37,8 @@ exports.selectUserByUsername = async (username) => {
     .leftJoin('users_orders', 'users.username', '=', 'users_orders.username')
     .where('users.username', username)
     .first();
+  if (!user) return Promise.reject({ status: 404, msg: 'username not found' });
+  return user;
 };
 
 exports.updateUserByUsername = async (

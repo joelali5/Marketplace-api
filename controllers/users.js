@@ -1,3 +1,4 @@
+const { selectBasketByUsername } = require('../models/basket');
 const {
   selectUsers,
   insertUser,
@@ -32,4 +33,12 @@ exports.patchUserByUsername = async (req, res, next) => {
   );
   const user = await selectUserByUsername(updatedUser.username);
   res.send({ user });
+};
+
+exports.getUsersBasket = async (req, res, next) => {
+  const [items] = await Promise.all([
+    selectBasketByUsername(req.params.username),
+    selectUserByUsername(req.params.username),
+  ]);
+  res.send({ items });
 };

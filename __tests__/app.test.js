@@ -143,6 +143,12 @@ describe('GET /api/users/:username', () => {
       })
     );
   });
+  it('404 - when the requested username does not exist', async () => {
+    const { body } = await request(app)
+      .get('/api/users/not-a-user')
+      .expect(404);
+    expect(body.msg).toEqual('username not found');
+  });
 });
 
 describe('PATCH /api/users/:username', () => {
@@ -343,5 +349,99 @@ describe('POST /api/items', () => {
       })
       .expect(404);
     expect(body.msg).toBe('category not found');
+  });
+});
+
+describe('POST /api/items', () => {
+  it('200 - responds with the new item', async () => {
+    const { body } = await request(app)
+      .post('/api/items')
+      .send({
+        item_name: 'Test item',
+        description: 'testy mc test face',
+        img_url: 'https://test.com/Test-item.jpg',
+        price: 100,
+        category_name: 'Relics',
+      })
+      .expect(201);
+    expect(body.item).toEqual(
+      expect.objectContaining({
+        item_id: expect.any(Number),
+        item_name: 'Test item',
+        description: 'testy mc test face',
+        img_url: 'https://test.com/Test-item.jpg',
+        price: 100,
+        category_name: 'Relics',
+      })
+    );
+  });
+  it('400 - invalid keys', async () => {
+    const { body } = await request(app)
+      .post('/api/items')
+      .send({
+        item_name: 'Test item',
+        description: 'testy mc test face',
+        img_url: 'https://test.com/Test-item.jpg',
+        price: 'not a number',
+        category_name: 'Relics',
+      })
+      .expect(400);
+    expect(body.msg).toBe(
+      'price must be a `number` type, but the final value was: `NaN` (cast from the value `"not a number"`).'
+    );
+  });
+  it('400 - additional keys', async () => {
+    const { body } = await request(app)
+      .post('/api/items')
+      .send({
+        item_name: 'Test item',
+        description: 'testy mc test face',
+        img_url: 'https://test.com/Test-item.jpg',
+        price: 100,
+        category_name: 'Relics',
+        extra: 'not allowed',
+      })
+      .expect(400);
+    expect(body.msg).toBe('Unexpected additional key: extra');
+  });
+  it('404 - invalid category', async () => {
+    const { body } = await request(app)
+      .post('/api/items')
+      .send({
+        item_name: 'Test item',
+        description: 'testy mc test face',
+        img_url: 'https://test.com/Test-item.jpg',
+        price: 100,
+        category_name: 'Not a category',
+      })
+      .expect(404);
+    expect(body.msg).toBe('category not found');
+  });
+});
+
+describe('GET /api/users/:username/basket', () => {
+  it('200 - responds with items in the users basket', async () => {
+    const { body } = await request(app)
+      .get('/api/users/Paul-R/basket')
+      .expect(200);
+    expect(body.items.length).toBe(2);
+    body.items.forEach((item) => {
+      expect(item).toEqual(
+        expect.objectContaining({
+          item_id: expect.any(Number),
+          item_name: expect.any(String),
+          description: expect.any(String),
+          img_url: expect.any(String),
+          price: expect.any(Number),
+          category_name: expect.any(String),
+        })
+      );
+    });
+  });
+  it('404 - when the username does not exist', async () => {
+    const { body } = await request(app)
+      .get('/api/users/not-a-user/basket')
+      .expect(404);
+    expect(body.msg).toBe('username not found`');
   });
 });
