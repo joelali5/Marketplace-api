@@ -19,3 +19,8 @@ exports.selectItems = async ({
       }
     });
 };
+
+exports.insertItem = async (newItem) => {
+  const [insertedItem] = await db('items').insert(newItem).returning('*');
+  return insertedItem;
+};

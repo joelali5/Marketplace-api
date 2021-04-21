@@ -13,3 +13,14 @@ exports.getItemQueries = yup
     p: yup.number().integer(),
   })
   .test('limit and p', 'Must contain limit and p', bothLimitAndPage);
+
+exports.newItem = yup
+  .object()
+  .shape({
+    item_name: yup.string().max(255).required(),
+    description: yup.string().max(500),
+    img_url: yup.string().required(),
+    price: yup.number().integer().required(),
+    category_name: yup.string().required(),
+  })
+  .test('no-unknown', 'Unknown keys', noAdditionalKeys);
