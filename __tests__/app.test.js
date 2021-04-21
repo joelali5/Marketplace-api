@@ -246,4 +246,12 @@ describe('GET /api/items', () => {
       'order must be one of the following values: asc, desc'
     );
   });
+  it('200 - items can be filtered by category_name', async () => {
+    const { body } = await request(app)
+      .get('/api/items?category_name=Electronics')
+      .expect(200);
+    body.items.forEach((item) => {
+      expect(item.category_name).toBe('Electronics');
+    });
+  });
 });
