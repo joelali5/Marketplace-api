@@ -1,3 +1,11 @@
+exports.withErrorHandling = (controller) => (req, res, next) => {
+  try {
+    controller(req, res, next);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.handleCustomErrors = (err, req, res, next) => {
   if (err.status)
     res.status(err.status).send({ msg: err.msg || 'Bad request' });

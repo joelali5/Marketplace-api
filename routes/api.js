@@ -1,6 +1,7 @@
 const express = require('express');
 const apiRouter = express.Router();
+const categoriesRouter = require('./categories');
 
-apiRouter.get('/', (req, res, next) => {});
+apiRouter.use('/categories', categoriesRouter);
 
 module.exports = apiRouter;
