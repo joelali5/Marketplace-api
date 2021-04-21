@@ -37,15 +37,4 @@ exports.selectUserByUsername = async (username) => {
     .leftJoin('users_orders', 'users.username', '=', 'users_orders.username')
     .where('users.username', username)
     .first();
-
-  // db
-  //   .select('users.*', db.select('*').from('baskets'))
-  //   .from('users')
-  //   // .count('users_order.basket_id AS items_in_basket')
-  //   // .count('orders.order_id AS items_ordered')
-  //   // .leftJoin('baskets', 'baskets.username', '=', 'users.username')
-  //   // .leftJoin('orders', 'orders.username', '=', 'users.username')
-  //   // .groupBy('users.username')
-  //   .where('users.username', username)
-  //   .first()
 };
