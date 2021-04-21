@@ -445,3 +445,30 @@ describe('GET /api/users/:username/basket', () => {
     expect(body.msg).toBe('username not found');
   });
 });
+
+describe('GET /api/users/:username/orders', () => {
+  it('200 - responds with items the user has ordered', async () => {
+    const { body } = await request(app)
+      .get('/api/users/Paul-R/orders')
+      .expect(200);
+    expect(body.items.length).toBe(1);
+    body.items.forEach((item) => {
+      expect(item).toEqual(
+        expect.objectContaining({
+          item_id: expect.any(Number),
+          item_name: expect.any(String),
+          description: expect.any(String),
+          img_url: expect.any(String),
+          price: expect.any(Number),
+          category_name: expect.any(String),
+        })
+      );
+    });
+  });
+  it('404 - when the username does not exist', async () => {
+    const { body } = await request(app)
+      .get('/api/users/not-a-user/orders')
+      .expect(404);
+    expect(body.msg).toBe('username not found');
+  });
+});

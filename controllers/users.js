@@ -1,4 +1,5 @@
 const { selectBasketByUsername } = require('../models/basket');
+const { selectOrdersByUsername } = require('../models/orders');
 const {
   selectUsers,
   insertUser,
@@ -38,6 +39,14 @@ exports.patchUserByUsername = async (req, res, next) => {
 exports.getUsersBasket = async (req, res, next) => {
   const [items] = await Promise.all([
     selectBasketByUsername(req.params.username),
+    selectUserByUsername(req.params.username),
+  ]);
+  res.send({ items });
+};
+
+exports.getUsersOrders = async (req, res, next) => {
+  const [items] = await Promise.all([
+    selectOrdersByUsername(req.params.username),
     selectUserByUsername(req.params.username),
   ]);
   res.send({ items });
