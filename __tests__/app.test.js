@@ -10,8 +10,8 @@ afterAll(async () => {
   db.destroy();
 });
 
-describe('/api/categories', () => {
-  it('GET 200 - responds with an array of categories', async () => {
+describe('GET /api/categories', () => {
+  it('200 - responds with an array of categories', async () => {
     const { body } = await request(app).get('/api/categories').expect(200);
     expect(body.categories).toBeArray();
     expect(body.categories.length).toBe(3);
@@ -23,7 +23,10 @@ describe('/api/categories', () => {
       );
     });
   });
-  it('POST 201 - responds with the created category', async () => {
+});
+
+describe('POST /api/categories', () => {
+  it('201 - responds with the created category', async () => {
     const { body } = await request(app)
       .post('/api/categories')
       .send({ category_name: 'Antiques' })
@@ -35,7 +38,7 @@ describe('/api/categories', () => {
       })
     );
   });
-  it('POST 400 - when missing required keys', async () => {
+  it('400 - when missing required keys', async () => {
     const { body } = await request(app)
       .post('/api/categories')
       .send({})
@@ -44,7 +47,7 @@ describe('/api/categories', () => {
   });
 });
 
-describe('/api/users', () => {
+describe('GET /api/users', () => {
   it('GET 200 - responds with an array of users', async () => {
     const { body } = await request(app).get('/api/users').expect(200);
     expect(body.users).toBeArray();
@@ -58,7 +61,10 @@ describe('/api/users', () => {
       );
     });
   });
-  it('POST 201 - responds with the created user', async () => {
+});
+
+describe('POST /api/users', () => {
+  it('201 - responds with the created user', async () => {
     const { body } = await request(app)
       .post('/api/users')
       .send({ username: 'Doug', avatar_url: 'https://test.com/doug.jpg' })
@@ -71,7 +77,7 @@ describe('/api/users', () => {
       })
     );
   });
-  it('POST 400 - for missing keys', async () => {
+  it('400 - for missing keys', async () => {
     const { body } = await request(app)
       .post('/api/users')
       .send({ avatar_url: 'https://test.com/doug.jpg' })
@@ -79,7 +85,7 @@ describe('/api/users', () => {
 
     expect(body.msg).toBe('username is a required field');
   });
-  it('POST 400 - for invalid keys', async () => {
+  it('400 - for invalid keys', async () => {
     const { body } = await request(app)
       .post('/api/users')
       .send({ username: 'Doug'.repeat(100) })
@@ -87,7 +93,7 @@ describe('/api/users', () => {
 
     expect(body.msg).toBe('username must be at most 255 characters');
   });
-  it('POST 400 - for additional keys', async () => {
+  it('400 - for additional keys', async () => {
     const { body } = await request(app)
       .post('/api/users')
       .send({
@@ -98,5 +104,26 @@ describe('/api/users', () => {
       .expect(400);
 
     expect(body.msg).toBe('Unexpected additional key: extra');
+  });
+});
+
+describe('GET /api/users/:username', () => {
+  it('200 - responds with the requested user', async () => {
+    const { body } = await request(app).get('/api/users/Paul-R').expect(200);
+    expect(body.user).toEqual(
+      expect.objectContaining({
+        username: 'Paul-R',
+        avatar_url: 'https://test.com/Paul-R.jpg',
+        kudos: 0,
+      })
+    );
+  });
+  it('200 - responds with the number of items in the users basket', async () => {
+    const { body } = await request(app).get('/api/users/Paul-R').expect(200);
+    expect(body.user).toEqual(
+      expect.objectContaining({
+        items_in_basket: '2',
+      })
+    );
   });
 });
