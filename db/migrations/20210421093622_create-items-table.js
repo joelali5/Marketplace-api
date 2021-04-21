@@ -3,7 +3,7 @@ exports.up = function (knex) {
     itemsTable.increments().primary();
     itemsTable.string('item_name').notNullable();
     itemsTable.string('description', 500);
-    itemsTable.string('img_url').notNullable();
+    itemsTable.text('img_url').notNullable();
     itemsTable.integer('price').notNullable();
     itemsTable.string('category_name').references('categories.category_name');
   });

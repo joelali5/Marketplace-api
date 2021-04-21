@@ -3,7 +3,7 @@ exports.up = function (knex) {
     usersTable.increments().primary();
     usersTable.string('username').notNullable();
     usersTable.string('full_name').notNullable();
-    usersTable.string('avatar_url');
+    usersTable.text('avatar_url');
     usersTable.integer('kudos').defaultTo(0);
   });
 };
