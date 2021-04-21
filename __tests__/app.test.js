@@ -230,4 +230,20 @@ describe('GET /api/items', () => {
       .expect(200);
     expect(body.items).toBeSortedBy('price', { descending: true });
   });
+  it('400 - for invalid sort_by', async () => {
+    const { body } = await request(app)
+      .get('/api/items?sort_by=invalid')
+      .expect(400);
+    expect(body.msg).toBe(
+      'sort_by must be one of the following values: item_id, item_name, price, category_name'
+    );
+  });
+  it('400 - for invalid order', async () => {
+    const { body } = await request(app)
+      .get('/api/items?order=invalid')
+      .expect(400);
+    expect(body.msg).toBe(
+      'order must be one of the following values: asc, desc'
+    );
+  });
 });
