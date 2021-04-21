@@ -201,4 +201,23 @@ describe('PATCH /api/users/:username', () => {
   });
 });
 
-describe('GET', () => {});
+describe('GET /api/items', () => {
+  it('200 - responds with all items that have not been ordered', async () => {
+    const { body } = await request(app).get('/api/items').expect(200);
+
+    expect(body.items).toBeArray();
+    expect(body.items.length).toBe(6);
+
+    body.items.forEach((item) => {
+      expect(item).toEqual(
+        expect.objectContaining({
+          item_name: expect.any(String),
+          description: expect.any(String),
+          img_url: expect.any(String),
+          price: expect.any(Number),
+          category_name: expect.any(String),
+        })
+      );
+    });
+  });
+});
