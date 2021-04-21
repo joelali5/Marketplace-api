@@ -58,4 +58,17 @@ describe('/api/users', () => {
       );
     });
   });
+  it('POST 201 - responds with the created user', async () => {
+    const { body } = await request(app)
+      .post('/api/users')
+      .send({ username: 'Doug', avatar_url: 'https://test.com/doug.jpg' })
+      .expect(201);
+
+    expect(body.user).toEqual(
+      expect.objectContaining({
+        username: 'Doug',
+        avatar_url: 'https://test.com/doug.jpg',
+      })
+    );
+  });
 });
