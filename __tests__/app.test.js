@@ -168,12 +168,12 @@ describe('PATCH /api/users/:username', () => {
     const { body } = await request(app)
       .patch('/api/users/Paul-R')
       .send({
-        username: 'Paul the third',
+        username: 'Paul-the-third',
       })
       .expect(200);
     expect(body.user).toEqual(
       expect.objectContaining({
-        username: 'Paul the third',
+        username: 'Paul-the-third',
         avatar_url: 'https://test.com/Paul-R.jpg',
         kudos: 0,
         items_in_basket: 2,
@@ -190,4 +190,15 @@ describe('PATCH /api/users/:username', () => {
       .expect(400);
     expect(body.msg).toBe('kudos_inc must be an integer');
   });
+  it('400 - usernames cannot have spaces', async () => {
+    const { body } = await request(app)
+      .patch('/api/users/Paul-R')
+      .send({
+        username: 'Paul R',
+      })
+      .expect(400);
+    expect(body.msg).toBe('usernames cannot contain spaces');
+  });
 });
+
+describe('GET', () => {});
