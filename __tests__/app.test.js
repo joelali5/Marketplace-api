@@ -442,6 +442,6 @@ describe('GET /api/users/:username/basket', () => {
     const { body } = await request(app)
       .get('/api/users/not-a-user/basket')
       .expect(404);
-    expect(body.msg).toBe('username not found`');
+    expect(body.msg).toBe('username not found');
   });
 });
