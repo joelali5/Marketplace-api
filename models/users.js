@@ -38,3 +38,13 @@ exports.selectUserByUsername = async (username) => {
     .where('users.username', username)
     .first();
 };
+
+exports.updateUserByUsername = async (
+  username,
+  { kudos_inc = 0, ...userUpdates }
+) => {
+  return db('users')
+    .update(userUpdates)
+    .increment('kudos', kudos_inc)
+    .where('users.username', username);
+};

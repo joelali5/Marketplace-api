@@ -8,3 +8,12 @@ exports.newUser = yup
     avatar_url: yup.string(),
   })
   .test('no-unknown', 'Unknown keys', noAdditionalKeys);
+
+exports.userUpdates = yup
+  .object()
+  .shape({
+    username: yup.string().max(255),
+    avatar_url: yup.string(),
+    kudos_inc: yup.number().integer(),
+  })
+  .test('no-unknown', 'Unknown keys', noAdditionalKeys);

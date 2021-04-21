@@ -4,6 +4,7 @@ const {
   getUsers,
   postUser,
   getUserByUsername,
+  patchUserByUsername,
 } = require('../controllers/users');
 const usersRouter = express.Router();
 
@@ -12,6 +13,9 @@ usersRouter
   .get(withErrorHandling(getUsers))
   .post(withErrorHandling(postUser));
 
-usersRouter.route('/:username').get(withErrorHandling(getUserByUsername));
+usersRouter
+  .route('/:username')
+  .get(withErrorHandling(getUserByUsername))
+  .patch(withErrorHandling(patchUserByUsername));
 
 module.exports = usersRouter;

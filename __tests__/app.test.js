@@ -144,3 +144,24 @@ describe('GET /api/users/:username', () => {
     );
   });
 });
+
+describe('PATCH /api/users/:username', () => {
+  it('200 - responds with the updated user', async () => {
+    const { body } = await request(app)
+      .patch('/api/users/Paul-R')
+      .send({
+        avatar_url: 'newUrl',
+        kudos_inc: 1,
+      })
+      .expect(200);
+    expect(body.user).toEqual(
+      expect.objectContaining({
+        username: 'Paul-R',
+        avatar_url: 'newUrl',
+        kudos: 1,
+        items_in_basket: 2,
+        items_ordered: 1,
+      })
+    );
+  });
+});
