@@ -35,4 +35,11 @@ describe('/api/categories', () => {
       })
     );
   });
+  it('POST 400 - when missing required keys', async () => {
+    const { body } = await request(app)
+      .post('/api/categories')
+      .send({})
+      .expect(400);
+    expect(body.msg).toBe('category_name is a required field');
+  });
 });

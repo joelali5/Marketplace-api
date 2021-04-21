@@ -1,8 +1,10 @@
-exports.withErrorHandling = (controller) => (req, res, next) => {
+exports.withErrorHandling = (controller) => async (req, res, next) => {
   try {
-    controller(req, res, next);
+    await controller(req, res, next);
   } catch (err) {
-    next(err);
+    if (err.name === 'ValidationError') {
+      next({ status: 400, msg: err.errors.join(', ') });
+    } else next(err);
   }
 };
 
