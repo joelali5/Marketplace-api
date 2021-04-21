@@ -43,3 +43,19 @@ describe('/api/categories', () => {
     expect(body.msg).toBe('category_name is a required field');
   });
 });
+
+describe('/api/users', () => {
+  it('GET 200 - responds with an array of users', async () => {
+    const { body } = await request(app).get('/api/users').expect(200);
+    expect(body.users).toBeArray();
+    expect(body.users.length).toBe(4);
+    body.users.forEach((user) => {
+      expect(user).toEqual(
+        expect.objectContaining({
+          username: expect.any(String),
+          avatar_url: expect.any(String),
+        })
+      );
+    });
+  });
+});

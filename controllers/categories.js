@@ -8,9 +8,7 @@ exports.getCategories = async (req, res, next) => {
 
 exports.postCategory = async (req, res, next) => {
   const newCategory = req.body;
-
   await schemas.newCategory.validate(newCategory);
-
   const category = await insertCategory(newCategory);
   res.status(201).send({ category });
 };
