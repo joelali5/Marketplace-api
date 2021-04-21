@@ -71,4 +71,32 @@ describe('/api/users', () => {
       })
     );
   });
+  it('POST 400 - for missing keys', async () => {
+    const { body } = await request(app)
+      .post('/api/users')
+      .send({ avatar_url: 'https://test.com/doug.jpg' })
+      .expect(400);
+
+    expect(body.msg).toBe('username is a required field');
+  });
+  it('POST 400 - for invalid keys', async () => {
+    const { body } = await request(app)
+      .post('/api/users')
+      .send({ username: 'Doug'.repeat(100) })
+      .expect(400);
+
+    expect(body.msg).toBe('username must be at most 255 characters');
+  });
+  it('POST 400 - for additional keys', async () => {
+    const { body } = await request(app)
+      .post('/api/users')
+      .send({
+        username: 'Doug',
+        avatar_url: 'https://test.com/doug.jpg',
+        extra: true,
+      })
+      .expect(400);
+
+    expect(body.msg).toBe('Unexpected additional key: extra');
+  });
 });
