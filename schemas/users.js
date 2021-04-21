@@ -1,5 +1,5 @@
 const yup = require('yup');
-const { noAdditionalKeys } = require('./utils');
+const { noAdditionalKeys } = require('./utils/objects');
 
 exports.newUser = yup
   .object()
