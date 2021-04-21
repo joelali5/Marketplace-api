@@ -126,4 +126,12 @@ describe('GET /api/users/:username', () => {
       })
     );
   });
+  it('200 - responds with the number of items the user has ordered', async () => {
+    const { body } = await request(app).get('/api/users/Paul-R').expect(200);
+    expect(body.user).toEqual(
+      expect.objectContaining({
+        items_ordered: '1',
+      })
+    );
+  });
 });
