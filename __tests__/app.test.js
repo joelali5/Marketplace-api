@@ -260,4 +260,23 @@ describe('GET /api/items', () => {
       .expect(404);
     expect(body.msg).toBe('category not found');
   });
+  it('200 - results can be paginated with a limit and p query', async () => {
+    const { body } = await request(app)
+      .get('/api/items?sort_by=item_id&limit=2&p=2')
+      .expect(200);
+    console.log(body.items);
+    expect(body.items.length).toBe(2);
+    const [item3, item4] = body.items;
+    expect(item3.item_id).toBe(3);
+    expect(item4.item_id).toBe(4);
+  });
+  it.only('400 - if both limit and p are not passed', async () => {
+    const { body } = await request(app)
+      .get('/api/items?sort_by=item_id&limit=2')
+      .expect(400);
+    console.log(body);
+    expect(body.msg).toBe(
+      'limit and p queries must be provided in conjunction'
+    );
+  });
 });

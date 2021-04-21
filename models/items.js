@@ -4,6 +4,8 @@ exports.selectItems = async ({
   sort_by = 'item_name',
   order = 'asc',
   category_name,
+  limit,
+  p,
 }) => {
   return db('items')
     .select('*')
@@ -11,5 +13,9 @@ exports.selectItems = async ({
     .orderBy(sort_by, order)
     .modify((query) => {
       if (category_name) query.where({ category_name });
+      if (limit && p) {
+        query.limit(limit);
+        query.offset(+limit * (p - 1));
+      }
     });
 };

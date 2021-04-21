@@ -16,3 +16,18 @@ exports.noAdditionalKeys = function (value) {
   }
   return true;
 };
+
+exports.bothLimitAndPage = function (value) {
+  const providedKeys = Object.keys(value);
+  const hasLimit = providedKeys.includes('limit');
+  const hasPage = providedKeys.includes('p');
+  if (hasLimit || hasPage) {
+    if (!hasPage || !hasLimit) {
+      const err = new yup.ValidationError(
+        `limit and p queries must be provided in conjunction`
+      );
+      throw err;
+    }
+  }
+  return true;
+};
