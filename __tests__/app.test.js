@@ -23,4 +23,16 @@ describe('/api/categories', () => {
       );
     });
   });
+  it('POST 201 - responds with the created category', async () => {
+    const { body } = await request(app)
+      .post('/api/categories')
+      .send({ category_name: 'Antiques' })
+      .expect(201);
+
+    expect(body.category).toEqual(
+      expect.objectContaining({
+        category_name: 'Antiques',
+      })
+    );
+  });
 });
