@@ -224,4 +224,10 @@ describe('GET /api/items', () => {
     const { body } = await request(app).get('/api/items').expect(200);
     expect(body.items).toBeSortedBy('item_name');
   });
+  it('200 - items are sorted by a passed column and order', async () => {
+    const { body } = await request(app)
+      .get('/api/items?sort_by=price&order=desc')
+      .expect(200);
+    expect(body.items).toBeSortedBy('price', { descending: true });
+  });
 });
