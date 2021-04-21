@@ -26,7 +26,10 @@ exports.getUserByUsername = async (req, res, next) => {
 exports.patchUserByUsername = async (req, res, next) => {
   const userUpdates = req.body;
   await schemas.userUpdates.validate(userUpdates);
-  await updateUserByUsername(req.params.username, userUpdates);
-  const user = await selectUserByUsername(req.params.username);
+  const updatedUser = await updateUserByUsername(
+    req.params.username,
+    userUpdates
+  );
+  const user = await selectUserByUsername(updatedUser.username);
   res.send({ user });
 };

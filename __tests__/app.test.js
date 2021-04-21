@@ -164,4 +164,21 @@ describe('PATCH /api/users/:username', () => {
       })
     );
   });
+  it('200 - updated usernames are cascaded', async () => {
+    const { body } = await request(app)
+      .patch('/api/users/Paul-R')
+      .send({
+        username: 'Paul the third',
+      })
+      .expect(200);
+    expect(body.user).toEqual(
+      expect.objectContaining({
+        username: 'Paul the third',
+        avatar_url: 'https://test.com/Paul-R.jpg',
+        kudos: 0,
+        items_in_basket: 2,
+        items_ordered: 1,
+      })
+    );
+  });
 });

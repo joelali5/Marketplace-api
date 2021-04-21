@@ -43,8 +43,10 @@ exports.updateUserByUsername = async (
   username,
   { kudos_inc = 0, ...userUpdates }
 ) => {
-  return db('users')
+  const [updatedUser] = await db('users')
     .update(userUpdates)
     .increment('kudos', kudos_inc)
-    .where('users.username', username);
+    .where('users.username', username)
+    .returning('*');
+  return updatedUser;
 };
