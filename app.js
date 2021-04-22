@@ -12,6 +12,10 @@ const {
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res, next) => {
+  res.send({ msg: 'api up and running 👍' });
+});
+
 app.use('/api', apiRouter);
 
 app.all('/*', (req, res, next) => {
