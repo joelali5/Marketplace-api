@@ -454,6 +454,10 @@ describe('DELETE /api/items/:item_id', () => {
       .first();
     expect(deletedItem).toBe(undefined);
   });
+  it('204 - cascades to baskets and orders', async () => {
+    await request(app).delete('/api/items/3').expect(204);
+    await request(app).delete('/api/items/5').expect(204);
+  });
   it('404 - for a non-existent item_id', async () => {
     const { body } = await request(app).delete('/api/items/1000').expect(404);
     expect(body.msg).toBe('item not found');

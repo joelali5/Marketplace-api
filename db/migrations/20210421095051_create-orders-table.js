@@ -6,7 +6,11 @@ exports.up = function (knex) {
       .references('users.username')
       .notNullable()
       .onUpdate('CASCADE');
-    ordersTable.integer('item_id').references('items.item_id').notNullable();
+    ordersTable
+      .integer('item_id')
+      .references('items.item_id')
+      .notNullable()
+      .onDelete('CASCADE');
   });
 };
 
