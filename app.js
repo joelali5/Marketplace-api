@@ -1,5 +1,6 @@
 const { NODE_ENV = 'dev' } = process.env;
 require('dotenv').config({ path: `./${NODE_ENV}.env` });
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const apiRouter = require('./routes/api.js');
@@ -8,6 +9,7 @@ const {
   handleInternalErrors,
 } = require('./controllers/errors');
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/api', apiRouter);
