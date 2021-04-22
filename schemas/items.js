@@ -38,3 +38,5 @@ exports.newOrderItem = yup
     item_id: yup.number().integer().required(),
   })
   .test('no-unknown', 'Unknown keys', noAdditionalKeys);
+
+exports.itemId = yup.number().integer();

@@ -433,6 +433,39 @@ describe('GET /api/items/:item_id', () => {
       })
     );
   });
+  it('404 - for a non-existent item_id', async () => {
+    const { body } = await request(app).get('/api/items/1000').expect(404);
+    expect(body.msg).toBe('item not found');
+  });
+  it('400 - for a non-integer item_id', async () => {
+    const { body } = await request(app).get('/api/items/notAnInt').expect(400);
+    expect(body.msg).toBe(
+      'this must be a `number` type, but the final value was: `NaN` (cast from the value `"notAnInt"`).'
+    );
+  });
+});
+
+describe('DELETE /api/items/:item_id', () => {
+  it('204 - responds with no content', async () => {
+    await request(app).delete('/api/items/1').expect(204);
+    const deletedItem = await db('items')
+      .select('*')
+      .where('item_id', 1)
+      .first();
+    expect(deletedItem).toBe(undefined);
+  });
+  it('404 - for a non-existent item_id', async () => {
+    const { body } = await request(app).delete('/api/items/1000').expect(404);
+    expect(body.msg).toBe('item not found');
+  });
+  it('400 - for a non-integer item_id', async () => {
+    const { body } = await request(app)
+      .delete('/api/items/notAnInt')
+      .expect(400);
+    expect(body.msg).toBe(
+      'this must be a `number` type, but the final value was: `NaN` (cast from the value `"notAnInt"`).'
+    );
+  });
 });
 
 describe('GET /api/users/:username/basket', () => {

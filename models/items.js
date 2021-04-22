@@ -30,3 +30,9 @@ exports.insertItem = async (newItem) => {
   const [insertedItem] = await db('items').insert(newItem).returning('*');
   return insertedItem;
 };
+
+exports.deleteItemById = async (item_id) => {
+  const delCount = await db('items').where('item_id', item_id).del();
+  if (!delCount) return Promise.reject({ status: 404, msg: 'item not found' });
+  return true;
+};

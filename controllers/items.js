@@ -1,5 +1,10 @@
 const { selectCategoryByName } = require('../models/categories');
-const { selectItems, insertItem, selectItemById } = require('../models/items');
+const {
+  selectItems,
+  insertItem,
+  selectItemById,
+  deleteItemById,
+} = require('../models/items');
 const schemas = require('../schemas');
 
 exports.getItems = async (req, res, next) => {
@@ -21,6 +26,14 @@ exports.postItem = async (req, res, next) => {
 
 exports.getItemById = async (req, res, next) => {
   const { item_id } = req.params;
+  await schemas.itemId.validate(item_id);
   const item = await selectItemById(item_id);
   res.status(200).send({ item });
+};
+
+exports.deleteItemById = async (req, res, next) => {
+  const { item_id } = req.params;
+  await schemas.itemId.validate(item_id);
+  await deleteItemById(item_id);
+  res.status(204).send();
 };
