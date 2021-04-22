@@ -18,9 +18,19 @@ There are `seed-dev` and `seed-prod` scripts for manual seeding. As the sprint i
 POST /api/reset
 ```
 
+## Docs
+
+API docs are written using [Docusaurus](https://docusaurus.io/) and hosted on the path '/'.
+
+### Updating docs
+
+The docs site is a React app. Navigate to /docs for the source code. Edit the markdown files in /docs to update the site. You can start a dev version using `npm run dev-docs` to check your changes. See the [docusaurus docs](https://docusaurus.io/docs/docs-introduction) for the markdown format.
+
+Once updated run the build script `npm run build-docs` and re-deploy the repo.
+
 ## Endpoints
 
-TODO - api docs
 TODO - price queries
 TODO - exclude a users own items
 TODO - add posted by to items
+TODO - Check ordered items are removed from baskets
