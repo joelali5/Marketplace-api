@@ -446,6 +446,46 @@ describe('GET /api/users/:username/basket', () => {
   });
 });
 
+describe('POST /api/users/:username/basket', () => {
+  it('201 - responds with added basket item', async () => {
+    const { body } = await request(app)
+      .post('/api/users/Paul-R/basket')
+      .send({
+        item_id: 1,
+      })
+      .expect(201);
+
+    expect(body.item).toEqual(
+      expect.objectContaining({
+        item_id: 1,
+        item_name: 'The Holy Grail',
+        description: 'Defo the real deal and not a prop from Indiana Jones',
+        img_url: 'https://test.com/The Holy Grail.jpg',
+        price: 5000,
+        category_name: 'Relics',
+      })
+    );
+  });
+  it('404 - when the username does not exist', async () => {
+    const { body } = await request(app)
+      .post('/api/users/not-a-user/basket')
+      .send({
+        item_id: 1,
+      })
+      .expect(404);
+    expect(body.msg).toBe('username not found');
+  });
+  it('404 - when the item_id does not exist', async () => {
+    const { body } = await request(app)
+      .post('/api/users/Paul-R/basket')
+      .send({
+        item_id: 1000,
+      })
+      .expect(404);
+    expect(body.msg).toBe('item not found');
+  });
+});
+
 describe('GET /api/users/:username/orders', () => {
   it('200 - responds with items the user has ordered', async () => {
     const { body } = await request(app)

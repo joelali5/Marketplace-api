@@ -7,6 +7,7 @@ const {
   patchUserByUsername,
   getUsersBasket,
   getUsersOrders,
+  postItemToBasket,
 } = require('../controllers/users');
 const usersRouter = express.Router();
 
@@ -20,8 +21,10 @@ usersRouter
   .get(withErrorHandling(getUserByUsername))
   .patch(withErrorHandling(patchUserByUsername));
 
-usersRouter.route('/:username/basket').get(withErrorHandling(getUsersBasket));
-
+usersRouter
+  .route('/:username/basket')
+  .get(withErrorHandling(getUsersBasket))
+  .post(withErrorHandling(postItemToBasket));
 usersRouter.route('/:username/orders').get(withErrorHandling(getUsersOrders));
 
 module.exports = usersRouter;

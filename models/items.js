@@ -20,6 +20,12 @@ exports.selectItems = async ({
     });
 };
 
+exports.selectItemById = async (item_id) => {
+  const item = await db('items').select('*').where('item_id', item_id).first();
+  if (!item) return Promise.reject({ status: 404, msg: 'item not found' });
+  return item;
+};
+
 exports.insertItem = async (newItem) => {
   const [insertedItem] = await db('items').insert(newItem).returning('*');
   return insertedItem;

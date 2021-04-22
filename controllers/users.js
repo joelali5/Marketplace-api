@@ -1,4 +1,8 @@
-const { selectBasketByUsername } = require('../models/basket');
+const {
+  selectBasketByUsername,
+  postItemToBasket,
+} = require('../models/basket');
+const { selectItemById } = require('../models/items');
 const { selectOrdersByUsername } = require('../models/orders');
 const {
   selectUsers,
@@ -42,6 +46,15 @@ exports.getUsersBasket = async (req, res, next) => {
     selectUserByUsername(req.params.username),
   ]);
   res.send({ items });
+};
+
+exports.postItemToBasket = async (req, res, next) => {
+  const [item] = await Promise.all([
+    selectItemById(req.body.item_id),
+    selectUserByUsername(req.params.username),
+  ]);
+  await postItemToBasket(req.params.username, req.body.item_id);
+  res.status(201).send({ item });
 };
 
 exports.getUsersOrders = async (req, res, next) => {
