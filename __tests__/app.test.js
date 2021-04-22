@@ -236,6 +236,13 @@ describe('GET /api/items', () => {
       .expect(200);
     expect(body.items).toBeSortedBy('price', { descending: true });
   });
+  it('200 - items are filtered by the search query', async () => {
+    const { body } = await request(app)
+      .get('/api/items?search=holy grail')
+      .expect(200);
+    const itemNames = body.items.map((item) => item.item_name);
+    expect(itemNames).toIncludeAllMembers(['The Holy Grail']);
+  });
   it('400 - for invalid sort_by', async () => {
     const { body } = await request(app)
       .get('/api/items?sort_by=invalid')

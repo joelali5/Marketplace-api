@@ -21,3 +21,5 @@ POST /api/reset
 ## Endpoints
 
 TODO - fill me in
+TODO - add search endpoint
+TODO - exclude a users own items

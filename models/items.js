@@ -6,6 +6,7 @@ exports.selectItems = async ({
   category_name,
   limit,
   p,
+  search,
 }) => {
   return db('items')
     .select('*')
@@ -16,6 +17,9 @@ exports.selectItems = async ({
       if (limit && p) {
         query.limit(limit);
         query.offset(+limit * (p - 1));
+      }
+      if (search) {
+        query.where('item_name', 'ILIKE', `%${search}%`);
       }
     });
 };
