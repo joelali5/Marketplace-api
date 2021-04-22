@@ -8,7 +8,8 @@
     "dev": "nodemon listen.js",
     "start": "node listen.js",
     "setup-dbs": "psql -f db/setup.sql",
-    "seed-dev": "knex seed:run"
+    "seed-dev": "knex seed:run",
+    "seed-prod": "NODE_ENV=production DATABASE_URL=$(heroku config:get DATABASE_URL -a nc-marketplace) knex seed:run"
   },
   "keywords": [],
   "author": "",
