@@ -4,7 +4,10 @@ const {
   deleteItemFromBasket,
 } = require('../models/basket');
 const { selectItemById } = require('../models/items');
-const { selectOrdersByUsername } = require('../models/orders');
+const {
+  selectOrdersByUsername,
+  postItemToOrders,
+} = require('../models/orders');
 const {
   selectUsers,
   insertUser,
@@ -56,6 +59,16 @@ exports.postItemToBasket = async (req, res, next) => {
     selectUserByUsername(req.params.username),
   ]);
   await postItemToBasket(req.params.username, req.body.item_id);
+  res.status(201).send({ item });
+};
+
+exports.postItemToOrders = async (req, res, next) => {
+  await schemas.newOrderItem.validate(req.body);
+  const [item] = await Promise.all([
+    selectItemById(req.body.item_id),
+    selectUserByUsername(req.params.username),
+  ]);
+  await postItemToOrders(req.params.username, req.body.item_id);
   res.status(201).send({ item });
 };
 

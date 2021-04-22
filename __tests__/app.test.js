@@ -548,3 +548,50 @@ describe('GET /api/users/:username/orders', () => {
     expect(body.msg).toBe('username not found');
   });
 });
+
+describe('POST /api/users/:username/orders', () => {
+  it('201 - responds with ordered item', async () => {
+    const { body } = await request(app)
+      .post('/api/users/Paul-R/orders')
+      .send({
+        item_id: 1,
+      })
+      .expect(201);
+
+    expect(body.item).toEqual(
+      expect.objectContaining({
+        item_id: 1,
+        item_name: 'The Holy Grail',
+        description: 'Defo the real deal and not a prop from Indiana Jones',
+        img_url: 'https://test.com/The Holy Grail.jpg',
+        price: 5000,
+        category_name: 'Relics',
+      })
+    );
+  });
+  it('404 - when the username does not exist', async () => {
+    const { body } = await request(app)
+      .post('/api/users/not-a-user/orders')
+      .send({
+        item_id: 1,
+      })
+      .expect(404);
+    expect(body.msg).toBe('username not found');
+  });
+  it('404 - when the item_id does not exist', async () => {
+    const { body } = await request(app)
+      .post('/api/users/Paul-R/orders')
+      .send({
+        item_id: 1000,
+      })
+      .expect(404);
+    expect(body.msg).toBe('item not found');
+  });
+  it('400 - missing item_id', async () => {
+    const { body } = await request(app)
+      .post('/api/users/Paul-R/orders')
+      .send({})
+      .expect(400);
+    expect(body.msg).toBe('item_id is a required field');
+  });
+});

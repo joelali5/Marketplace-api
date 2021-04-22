@@ -31,3 +31,10 @@ exports.newBasketItem = yup
     item_id: yup.number().integer().required(),
   })
   .test('no-unknown', 'Unknown keys', noAdditionalKeys);
+
+exports.newOrderItem = yup
+  .object()
+  .shape({
+    item_id: yup.number().integer().required(),
+  })
+  .test('no-unknown', 'Unknown keys', noAdditionalKeys);
