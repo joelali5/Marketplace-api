@@ -484,6 +484,42 @@ describe('POST /api/users/:username/basket', () => {
       .expect(404);
     expect(body.msg).toBe('item not found');
   });
+  it('400 - missing item_id', async () => {
+    const { body } = await request(app)
+      .post('/api/users/Paul-R/basket')
+      .send({})
+      .expect(400);
+    expect(body.msg).toBe('item_id is a required field');
+  });
+});
+
+describe('DELETE /api/users/:username/basket/:item_id', () => {
+  it('204 - responds with no content when the item is removed', async () => {
+    await request(app).delete('/api/users/Paul-R/basket/3').expect(204);
+    const itemInBasket = await db('baskets')
+      .select('*')
+      .where('item_id', 3)
+      .first();
+    expect(itemInBasket).toBe(undefined);
+  });
+  it('404 - for a non-existent username', async () => {
+    const { body } = await request(app)
+      .delete('/api/users/not-a-username/basket/3')
+      .expect(404);
+    expect(body.msg).toBe('username not found');
+  });
+  it('404 - for a non-existent item_id', async () => {
+    const { body } = await request(app)
+      .delete('/api/users/Paul-R/basket/10000')
+      .expect(404);
+    expect(body.msg).toBe('item not found');
+  });
+  it('404 - for a existing item not in the users basket', async () => {
+    const { body } = await request(app)
+      .delete('/api/users/Paul-R/basket/1')
+      .expect(404);
+    expect(body.msg).toBe('item not found in basket');
+  });
 });
 
 describe('GET /api/users/:username/orders', () => {

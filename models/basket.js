@@ -11,3 +11,13 @@ exports.selectBasketByUsername = async (username) => {
 exports.postItemToBasket = async (username, item_id) => {
   return db.insert({ item_id, username }).into('baskets').returning('*');
 };
+
+exports.deleteItemFromBasket = async (username, item_id) => {
+  const deleteCount = await db('baskets')
+    .where('username', username)
+    .where('item_id', item_id)
+    .del();
+  if (!deleteCount)
+    return Promise.reject({ status: 404, msg: 'item not found in basket' });
+  return true;
+};

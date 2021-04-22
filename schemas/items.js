@@ -24,3 +24,10 @@ exports.newItem = yup
     category_name: yup.string().required(),
   })
   .test('no-unknown', 'Unknown keys', noAdditionalKeys);
+
+exports.newBasketItem = yup
+  .object()
+  .shape({
+    item_id: yup.number().integer().required(),
+  })
+  .test('no-unknown', 'Unknown keys', noAdditionalKeys);

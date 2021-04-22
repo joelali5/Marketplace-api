@@ -8,6 +8,7 @@ const {
   getUsersBasket,
   getUsersOrders,
   postItemToBasket,
+  deleteItemFromUsersBasket,
 } = require('../controllers/users');
 const usersRouter = express.Router();
 
@@ -25,6 +26,11 @@ usersRouter
   .route('/:username/basket')
   .get(withErrorHandling(getUsersBasket))
   .post(withErrorHandling(postItemToBasket));
+
+usersRouter
+  .route('/:username/basket/:item_id')
+  .delete(withErrorHandling(deleteItemFromUsersBasket));
+
 usersRouter.route('/:username/orders').get(withErrorHandling(getUsersOrders));
 
 module.exports = usersRouter;
