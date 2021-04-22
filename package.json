@@ -10,7 +10,8 @@
     "setup-dbs": "psql -f db/setup.sql",
     "seed-dev": "knex seed:run",
     "seed-prod": "NODE_ENV=production DATABASE_URL=$(heroku config:get DATABASE_URL -a nc-marketplace) knex seed:run",
-    "build-docs": "cd docs && npm run build -- --out-dir ../public/build"
+    "build-docs": "cd docs && npm run build -- --out-dir ../public/build",
+    "dev-docs": "cd docs && npm start"
   },
   "keywords": [],
   "author": "",
