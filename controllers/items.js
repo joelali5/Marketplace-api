@@ -1,5 +1,5 @@
 const { selectCategoryByName } = require('../models/categories');
-const { selectItems, insertItem } = require('../models/items');
+const { selectItems, insertItem, selectItemById } = require('../models/items');
 const schemas = require('../schemas');
 
 exports.getItems = async (req, res, next) => {
@@ -17,4 +17,10 @@ exports.postItem = async (req, res, next) => {
   await selectCategoryByName(req.body.category_name);
   const item = await insertItem(newItem);
   res.status(201).send({ item });
+};
+
+exports.getItemById = async (req, res, next) => {
+  const { item_id } = req.params;
+  const item = await selectItemById(item_id);
+  res.status(200).send({ item });
 };

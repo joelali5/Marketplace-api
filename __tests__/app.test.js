@@ -419,6 +419,22 @@ describe('POST /api/items', () => {
   });
 });
 
+describe('GET /api/items/:item_id', () => {
+  it('200 - responds with the requested item', async () => {
+    const { body } = await request(app).get('/api/items/1').expect(200);
+    expect(body.item).toEqual(
+      expect.objectContaining({
+        item_id: 1,
+        item_name: 'The Holy Grail',
+        description: 'Defo the real deal and not a prop from Indiana Jones',
+        img_url: 'https://test.com/The Holy Grail.jpg',
+        price: 5000,
+        category_name: 'Relics',
+      })
+    );
+  });
+});
+
 describe('GET /api/users/:username/basket', () => {
   it('200 - responds with items in the users basket', async () => {
     const { body } = await request(app)
