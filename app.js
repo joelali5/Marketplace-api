@@ -1,6 +1,7 @@
 const { NODE_ENV = 'dev' } = process.env;
 require('dotenv').config({ path: `./${NODE_ENV}.env` });
 const cors = require('cors');
+const path = require('path');
 const express = require('express');
 const app = express();
 const apiRouter = require('./routes/api.js');
@@ -11,9 +12,10 @@ const {
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public', 'build')));
 
 app.get('/', (req, res, next) => {
-  res.send({ msg: 'api up and running 👍' });
+  res.sendFile(path.join(__dirname, 'build', 'public', 'index.html'));
 });
 
 app.use('/api', apiRouter);
