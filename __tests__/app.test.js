@@ -69,7 +69,7 @@ describe('POST /api/users', () => {
       .post('/api/users')
       .send({ username: 'Doug', avatar_url: 'https://test.com/doug.jpg' })
       .expect(201);
-
+    console.log(body);
     expect(body.user).toEqual(
       expect.objectContaining({
         username: 'Doug',
@@ -289,73 +289,6 @@ describe('GET /api/items', () => {
     expect(body.msg).toBe(
       'limit and p queries must be provided in conjunction'
     );
-  });
-});
-
-describe('POST /api/items', () => {
-  it('200 - responds with the new item', async () => {
-    const { body } = await request(app)
-      .post('/api/items')
-      .send({
-        item_name: 'Test item',
-        description: 'testy mc test face',
-        img_url: 'https://test.com/Test-item.jpg',
-        price: 100,
-        category_name: 'Relics',
-      })
-      .expect(201);
-    expect(body.item).toEqual(
-      expect.objectContaining({
-        item_id: expect.any(Number),
-        item_name: 'Test item',
-        description: 'testy mc test face',
-        img_url: 'https://test.com/Test-item.jpg',
-        price: 100,
-        category_name: 'Relics',
-      })
-    );
-  });
-  it('400 - invalid keys', async () => {
-    const { body } = await request(app)
-      .post('/api/items')
-      .send({
-        item_name: 'Test item',
-        description: 'testy mc test face',
-        img_url: 'https://test.com/Test-item.jpg',
-        price: 'not a number',
-        category_name: 'Relics',
-      })
-      .expect(400);
-    expect(body.msg).toBe(
-      'price must be a `number` type, but the final value was: `NaN` (cast from the value `"not a number"`).'
-    );
-  });
-  it('400 - additional keys', async () => {
-    const { body } = await request(app)
-      .post('/api/items')
-      .send({
-        item_name: 'Test item',
-        description: 'testy mc test face',
-        img_url: 'https://test.com/Test-item.jpg',
-        price: 100,
-        category_name: 'Relics',
-        extra: 'not allowed',
-      })
-      .expect(400);
-    expect(body.msg).toBe('Unexpected additional key: extra');
-  });
-  it('404 - invalid category', async () => {
-    const { body } = await request(app)
-      .post('/api/items')
-      .send({
-        item_name: 'Test item',
-        description: 'testy mc test face',
-        img_url: 'https://test.com/Test-item.jpg',
-        price: 100,
-        category_name: 'Not a category',
-      })
-      .expect(404);
-    expect(body.msg).toBe('category not found');
   });
 });
 
