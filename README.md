@@ -20,6 +20,7 @@ POST /api/reset
 
 ## Endpoints
 
-TODO - fill me in
-TODO - add search endpoint
+TODO - api docs
+TODO - price queries
 TODO - exclude a users own items
+TODO - add posted by to items
