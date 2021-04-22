@@ -648,3 +648,15 @@ describe('POST /api/users/:username/orders', () => {
     expect(body.msg).toBe('item_id is a required field');
   });
 });
+
+describe('POST /api/reset', () => {
+  it('200 - resets the db to the initial state', async () => {
+    await request(app)
+      .post('/api/users')
+      .send({ username: 'Doug', avatar_url: 'https://test.com/doug.jpg' })
+      .expect(201);
+    await request(app).get('/api/users/Doug').expect(200);
+    await request(app).post('/api/reset').expect(200);
+    await request(app).get('/api/users/Doug').expect(404);
+  });
+});
