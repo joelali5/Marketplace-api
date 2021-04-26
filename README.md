@@ -1,6 +1,6 @@
 # NC Marketplace api for FE sprint
 
-This is an express server for the students to use during the (fe-nc-marketplace sprint)[https://github.com/northcoders/fe-nc-marketplace]
+This is an express server for the students to use during the [fe-nc-marketplace sprint](https://github.com/northcoders/fe-nc-marketplace)
 
 ## Hosting
 
@@ -28,9 +28,10 @@ The docs site is a React app. Navigate to /docs for the source code. Edit the ma
 
 Once updated run the build script `npm run build-docs` and re-deploy the repo.
 
-## Endpoints
+## TODO
 
-TODO - price queries
-TODO - exclude a users own items
-TODO - add posted by to items
-TODO - Check ordered items are removed from baskets
+- [ ] add more dev data to make it interesting
+- [ ] price queries
+- [ ] exclude a users own items
+- [ ] add posted by to items
+- [ ] Check ordered items are removed from baskets
