@@ -6,6 +6,8 @@ This is an express server for the students to use during the [fe-nc-marketplace 
 
 The server and db are hosted on the dev team heroku account.
 
+[https://nc-marketplace.herokuapp.com/](https://nc-marketplace.herokuapp.com/)
+
 ### Deployment
 
 Continuous deployment is setup from the `main` branch of this repo. Any pushes to this branch will be deployed.
