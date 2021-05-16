@@ -89,7 +89,6 @@ module.exports = [
     price: 899,
     category_name: 'Household',
   },
-
   {
     item_name: 'Chess Board',
     description: 'You could be the next Magnus Carlsen',
@@ -145,5 +144,22 @@ module.exports = [
       'https://images.unsplash.com/photo-1592922823354-c48e6d894bbe?&fit=crop&w=600&q=80',
     price: 2000,
     category_name: 'Electronics',
+  },
+  {
+    item_name: 'Pre ripped jeans',
+    description:
+      'Get some jeans that have seen it all without having to go through all those awkward life experiences yourself',
+    img_url:
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?&fit=crop&w=600&q=80',
+    price: 1700,
+    category_name: 'Clothing',
+  },
+  {
+    item_name: 'Raincoat',
+    description: 'Perfect for exploring the great outdoors',
+    img_url:
+      'https://images.unsplash.com/photo-1537045439788-4e69f886651a?&fit=crop&w=600&q=80',
+    price: 3999,
+    category_name: 'Clothing',
   },
 ];
