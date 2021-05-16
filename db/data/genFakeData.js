@@ -1,4 +1,10 @@
 const testData = require('./test');
 const { genFakeUsers } = require('./utils/fakeData');
 
-genFakeUsers(20, testData.users);
+// 10 users total
+const updateData = async () => {
+  const categories = testData.categories;
+  const users = genFakeUsers(7, testData.users);
+};
+
+updateData();

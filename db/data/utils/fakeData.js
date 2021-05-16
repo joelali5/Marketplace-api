@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-exports.genFakeUsers = (userCount = 20, users = []) => {
+exports.genFakeUsers = (userCount = 10, users = []) => {
   for (let i = 0; i < userCount; i++) {
     const fakeUser = {
       username: faker.internet.userName(),
@@ -8,6 +8,5 @@ exports.genFakeUsers = (userCount = 20, users = []) => {
     };
     users.push(fakeUser);
   }
-  console.log(users);
   return users;
 };

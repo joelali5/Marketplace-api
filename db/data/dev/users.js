@@ -8,10 +8,6 @@ module.exports = [
     avatar_url: 'https://test.com/Paul-C.jpg',
   },
   {
-    username: 'Izzi',
-    avatar_url: 'https://test.com/Izzi.jpg',
-  },
-  {
     username: 'Ant',
     avatar_url: 'https://test.com/Ant.jpg',
   },

@@ -368,7 +368,7 @@ describe('GET /api/items/:item_id', () => {
         item_id: 1,
         item_name: 'The Holy Grail',
         description: 'Defo the real deal and not a prop from Indiana Jones',
-        img_url: 'https://test.com/The Holy Grail.jpg',
+        img_url: expect.any(String),
         price: 5000,
         category_name: 'Relics',
       })
@@ -454,7 +454,7 @@ describe('POST /api/users/:username/basket', () => {
         item_id: 1,
         item_name: 'The Holy Grail',
         description: 'Defo the real deal and not a prop from Indiana Jones',
-        img_url: 'https://test.com/The Holy Grail.jpg',
+        img_url: expect.any(String),
         price: 5000,
         category_name: 'Relics',
       })
@@ -557,7 +557,7 @@ describe('POST /api/users/:username/orders', () => {
         item_id: 1,
         item_name: 'The Holy Grail',
         description: 'Defo the real deal and not a prop from Indiana Jones',
-        img_url: 'https://test.com/The Holy Grail.jpg',
+        img_url: expect.any(String),
         price: 5000,
         category_name: 'Relics',
       })
