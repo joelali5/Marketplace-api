@@ -11,7 +11,8 @@
     "seed-dev": "knex seed:run",
     "seed-prod": "NODE_ENV=production DATABASE_URL=$(heroku config:get DATABASE_URL -a nc-marketplace) knex seed:run",
     "build-docs": "cd docs && npm run build -- --out-dir ../public/build",
-    "dev-docs": "cd docs && npm start"
+    "dev-docs": "cd docs && npm start",
+    "gen-dev-data": "node db/data/genFakeData"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "faker": "^5.5.3",
     "jest": "^26.6.3",
     "jest-extended": "^0.11.5",
     "jest-sorted": "^1.0.12",
