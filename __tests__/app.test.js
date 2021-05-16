@@ -51,7 +51,7 @@ describe('GET /api/users', () => {
   it('GET 200 - responds with an array of users', async () => {
     const { body } = await request(app).get('/api/users').expect(200);
     expect(body.users).toBeArray();
-    expect(body.users.length).toBe(4);
+    expect(body.users.length).toBe(3);
     body.users.forEach((user) => {
       expect(user).toEqual(
         expect.objectContaining({
@@ -69,7 +69,6 @@ describe('POST /api/users', () => {
       .post('/api/users')
       .send({ username: 'Doug', avatar_url: 'https://test.com/doug.jpg' })
       .expect(201);
-    console.log(body);
     expect(body.user).toEqual(
       expect.objectContaining({
         username: 'Doug',
@@ -113,7 +112,8 @@ describe('GET /api/users/:username', () => {
     expect(body.user).toEqual(
       expect.objectContaining({
         username: 'Paul-R',
-        avatar_url: 'https://test.com/Paul-R.jpg',
+        avatar_url:
+          'https://images.prismic.io/northcoders/5ffa1ae0-0e83-47aa-a5f2-d4b6ef24af5a_Paul+R.jpg',
         kudos: 0,
       })
     );
@@ -180,7 +180,8 @@ describe('PATCH /api/users/:username', () => {
     expect(body.user).toEqual(
       expect.objectContaining({
         username: 'Paul-the-third',
-        avatar_url: 'https://test.com/Paul-R.jpg',
+        avatar_url:
+          'https://images.prismic.io/northcoders/5ffa1ae0-0e83-47aa-a5f2-d4b6ef24af5a_Paul+R.jpg',
         kudos: 0,
         items_in_basket: 2,
         items_ordered: 1,
@@ -367,7 +368,7 @@ describe('GET /api/items/:item_id', () => {
         item_id: 1,
         item_name: 'The Holy Grail',
         description: 'Defo the real deal and not a prop from Indiana Jones',
-        img_url: 'https://test.com/The Holy Grail.jpg',
+        img_url: expect.any(String),
         price: 5000,
         category_name: 'Relics',
       })
@@ -453,7 +454,7 @@ describe('POST /api/users/:username/basket', () => {
         item_id: 1,
         item_name: 'The Holy Grail',
         description: 'Defo the real deal and not a prop from Indiana Jones',
-        img_url: 'https://test.com/The Holy Grail.jpg',
+        img_url: expect.any(String),
         price: 5000,
         category_name: 'Relics',
       })
@@ -556,7 +557,7 @@ describe('POST /api/users/:username/orders', () => {
         item_id: 1,
         item_name: 'The Holy Grail',
         description: 'Defo the real deal and not a prop from Indiana Jones',
-        img_url: 'https://test.com/The Holy Grail.jpg',
+        img_url: expect.any(String),
         price: 5000,
         category_name: 'Relics',
       })
