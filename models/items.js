@@ -7,6 +7,8 @@ exports.selectItems = async ({
   limit,
   p,
   search,
+  min_price,
+  max_price,
 }) => {
   return (
     db('items')
@@ -23,6 +25,8 @@ exports.selectItems = async ({
         if (search) {
           query.where('item_name', 'ILIKE', `%${search}%`);
         }
+        if (min_price) query.where('price', '>=', min_price);
+        if (max_price) query.where('price', '<=', max_price);
       })
   );
 };

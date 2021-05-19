@@ -291,6 +291,41 @@ describe('GET /api/items', () => {
       'limit and p queries must be provided in conjunction'
     );
   });
+  it('200 - items are priced above by the min_price query', async () => {
+    const { body } = await request(app)
+      .get('/api/items?min_price=2000')
+      .expect(200);
+    body.items.forEach((item) => {
+      expect(item.price).toBeGreaterThan(2000);
+    });
+  });
+  it('200 - items equal to the min_price are included', async () => {
+    const { body } = await request(app)
+      .get('/api/items?min_price=100000000')
+      .expect(200);
+    expect(body.items.length).toBe(1);
+    body.items.forEach((item) => {
+      expect(item.price).toBe(100000000);
+    });
+  });
+  it('200 - items are priced below the max_price query', async () => {
+    const { body } = await request(app)
+      .get('/api/items?max_price=3500')
+      .expect(200);
+    expect(body.items.length).toBe(5);
+    body.items.forEach((item) => {
+      expect(item.price).toBeLessThan(3500);
+    });
+  });
+  it('200 - items equal to the max_price are included', async () => {
+    const { body } = await request(app)
+      .get('/api/items?max_price=1099')
+      .expect(200);
+    expect(body.items.length).toBe(1);
+    body.items.forEach((item) => {
+      expect(item.price).toBe(1099);
+    });
+  });
 });
 
 describe('POST /api/items', () => {
