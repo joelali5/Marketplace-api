@@ -15,7 +15,9 @@ Lists all available items. (Items that have already been ordered will not be lis
 | order         | asc / desc                               | asc           | The order in which results are sorted       |
 | search        | String                                   | Optional      | A search term to filter item_names by       |
 | limit         | Integer                                  | Optional      | The amount of results to return per page    |
-| p             | Integer                                  | Optional      | Which page of results to return.            |
+| p             | Integer                                  | Optional      | Which page of results to return             |
+| min_price     | Integer                                  | Optional      | The minimum price of returned items         |
+| max_price     | Integer                                  | Optional      | The maximum price of returned items         |
 
 **nb** Limit and p must be provided together or omitted for all results
 
