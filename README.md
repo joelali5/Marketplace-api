@@ -37,6 +37,6 @@ The original idea was to act like facebook marketplace where users would post it
 ### TODO
 
 - [ ] add more dev data to make it interesting
-- [ ] price queries on GET /api/items
+- [x] price queries on GET /api/items
 - [ ] add posted by to items
 - [ ] exclude a users own items from available items?
