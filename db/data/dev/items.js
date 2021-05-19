@@ -252,6 +252,32 @@ module.exports = [
     price: 2800,
     category_name: 'Household',
   },
+  {
+    item_name: 'Wooden Chair',
+    description: 'A real vintage feel',
+    img_url:
+      'https://images.unsplash.com/photo-1602592867152-ba321a437ff0?fit=crop&w=600&q=80',
+    price: 2800,
+    category_name: 'Household',
+  },
+  {
+    item_name: 'Cat scratching post',
+    description: 'Give the something to scratch instead of your furniture',
+    img_url:
+      'https://images.unsplash.com/photo-1545249390-6bdfa286032f?fit=crop&w=600&q=80',
+    price: 1599,
+    category_name: 'Household',
+  },
+  {
+    item_name: 'Classic converse',
+    description:
+      'Express yourself as an individual by doing the same as everyone else',
+    img_url:
+      'https://images.unsplash.com/photo-1494496195158-c3becb4f2475?fit=crop&w=600&q=80',
+    price: 4000,
+    category_name: 'Clothing',
+  },
 ];
 
+// this query crops unsplash images to 600px to keep the image file size down
 // &fit=crop&w=600&q=80
