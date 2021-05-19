@@ -11,6 +11,8 @@ exports.getItemQueries = yup
     category_name: yup.string(),
     limit: yup.number().integer(),
     p: yup.number().integer(),
+    min_price: yup.number().integer(),
+    max_price: yup.number().integer(),
   })
   .test('limit and p', 'Must contain limit and p', bothLimitAndPage);
 

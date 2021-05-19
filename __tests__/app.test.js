@@ -308,6 +308,12 @@ describe('GET /api/items', () => {
       expect(item.price).toBe(100000000);
     });
   });
+  it('400 - for invalid min_price', async () => {
+    const { body } = await request(app)
+      .get('/api/items?min_price=1.5')
+      .expect(400);
+    expect(body.msg).toBe('min_price must be an integer');
+  });
   it('200 - items are priced below the max_price query', async () => {
     const { body } = await request(app)
       .get('/api/items?max_price=3500')
@@ -325,6 +331,12 @@ describe('GET /api/items', () => {
     body.items.forEach((item) => {
       expect(item.price).toBe(1099);
     });
+  });
+  it('400 - for invalid max_price', async () => {
+    const { body } = await request(app)
+      .get('/api/items?max_price=1.5')
+      .expect(400);
+    expect(body.msg).toBe('max_price must be an integer');
   });
 });
 
