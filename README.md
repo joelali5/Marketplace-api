@@ -30,10 +30,13 @@ The docs site is a React app. Navigate to /docs for the source code. Edit the ma
 
 Once updated run the build script `npm run build-docs` and re-deploy the repo.
 
-## TODO
+## Further Development
+
+The original idea was to act like facebook marketplace where users would post items that would then be bought by other users. This would mean ordered items are removed from the available items on GET /api/items. Decided against this for simplicity during the sprint so items can be added to the basket or ordered multiple times without removing them from the list causing students to run out of items.
+
+### TODO
 
 - [ ] add more dev data to make it interesting
-- [ ] price queries
-- [ ] exclude a users own items
+- [ ] price queries on GET /api/items
 - [ ] add posted by to items
-- [ ] Check ordered items are removed from baskets
+- [ ] exclude a users own items from available items?
