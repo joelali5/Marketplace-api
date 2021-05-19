@@ -254,7 +254,7 @@ module.exports = [
   },
   {
     item_name: 'Cat scratching post',
-    description: 'Give the something to scratch instead of your furniture',
+    description: 'Give them something to scratch instead of your furniture',
     img_url:
       'https://images.unsplash.com/photo-1545249390-6bdfa286032f?fit=crop&w=600&q=80',
     price: 1599,
