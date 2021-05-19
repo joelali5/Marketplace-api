@@ -227,6 +227,10 @@ describe('GET /api/items', () => {
       );
     });
   });
+  it('200 - responds with a total item count', async () => {
+    const { body } = await request(app).get('/api/items').expect(200);
+    expect(body.total_items).toBe(8);
+  });
   it('200 - items are sorted by item name by default', async () => {
     const { body } = await request(app).get('/api/items').expect(200);
     expect(body.items).toBeSortedBy('item_name');
@@ -274,6 +278,12 @@ describe('GET /api/items', () => {
       .expect(404);
     expect(body.msg).toBe('category not found');
   });
+  it('200 - paginated results show a total item_count', async () => {
+    const { body } = await request(app)
+      .get('/api/items?sort_by=item_id&limit=2&p=2')
+      .expect(200);
+    expect(body.total_items).toBe(8);
+  });
   it('200 - results can be paginated with a limit and p query', async () => {
     const { body } = await request(app)
       .get('/api/items?sort_by=item_id&limit=2&p=2')
@@ -283,6 +293,7 @@ describe('GET /api/items', () => {
     expect(item3.item_id).toBe(3);
     expect(item4.item_id).toBe(4);
   });
+
   it('400 - if both limit and p are not passed', async () => {
     const { body } = await request(app)
       .get('/api/items?sort_by=item_id&limit=2')

@@ -8,12 +8,15 @@ const {
 const schemas = require('../schemas');
 
 exports.getItems = async (req, res, next) => {
-  const { category_name } = req.query;
+  const { category_name, limit, p, ...queries } = req.query;
+  const isPaginated = limit && p;
   await schemas.getItemQueries.validate(req.query);
   const dbQueries = [selectItems({ ...req.query })];
+  if (isPaginated) dbQueries.push(selectItems({ ...queries, category_name }));
   if (category_name) dbQueries.push(selectCategoryByName(category_name));
-  const [items] = await Promise.all(dbQueries);
-  res.send({ items });
+  const [items, totalItems] = await Promise.all(dbQueries);
+  const total_items = isPaginated ? totalItems.length : items.length;
+  res.send({ items, total_items });
 };
 
 exports.postItem = async (req, res, next) => {
