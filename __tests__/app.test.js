@@ -209,11 +209,11 @@ describe('PATCH /api/users/:username', () => {
 });
 
 describe('GET /api/items', () => {
-  it('200 - responds with all items that have not been ordered', async () => {
+  it('200 - responds with all items', async () => {
     const { body } = await request(app).get('/api/items').expect(200);
 
     expect(body.items).toBeArray();
-    expect(body.items.length).toBe(6);
+    expect(body.items.length).toBe(8);
 
     body.items.forEach((item) => {
       expect(item).toEqual(

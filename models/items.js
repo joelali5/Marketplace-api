@@ -8,20 +8,23 @@ exports.selectItems = async ({
   p,
   search,
 }) => {
-  return db('items')
-    .select('*')
-    .where('item_id', 'NOT IN', db('orders').select('item_id'))
-    .orderBy(sort_by, order)
-    .modify((query) => {
-      if (category_name) query.where({ category_name });
-      if (limit && p) {
-        query.limit(limit);
-        query.offset(+limit * (p - 1));
-      }
-      if (search) {
-        query.where('item_name', 'ILIKE', `%${search}%`);
-      }
-    });
+  return (
+    db('items')
+      .select('*')
+      // removes ordered items from the list of available items
+      // .where('item_id', 'NOT IN', db('orders').select('item_id'))
+      .orderBy(sort_by, order)
+      .modify((query) => {
+        if (category_name) query.where({ category_name });
+        if (limit && p) {
+          query.limit(limit);
+          query.offset(+limit * (p - 1));
+        }
+        if (search) {
+          query.where('item_name', 'ILIKE', `%${search}%`);
+        }
+      })
+  );
 };
 
 exports.selectItemById = async (item_id) => {
