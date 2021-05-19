@@ -42,6 +42,7 @@ Lists all available items. (Items that have already been ordered will not be lis
       "price": 2999,
       "category_name": "Relics"
     }
-  ]
+  ],
+  "total_items": 2
 }
 ```
