@@ -1,6 +1,6 @@
 ---
 id: post-item-to-basket
-title: POST /api/users/:user_id/basket
+title: POST /api/users/:username/basket
 sidebar_position: 2
 ---
 

@@ -1,6 +1,6 @@
 ---
 id: get-basket
-title: GET /api/users/:user_id/basket
+title: GET /api/users/:username/basket
 sidebar_position: 1
 ---
 
