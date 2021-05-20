@@ -1,6 +1,6 @@
 ---
 id: get-orders
-title: GET /api/users/:user_id/orders
+title: GET /api/users/:username/orders
 sidebar_position: 1
 ---
 
