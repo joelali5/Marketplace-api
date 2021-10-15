@@ -14,6 +14,12 @@ exports.handleCustomErrors = (err, req, res, next) => {
   else next(err);
 };
 
+exports.handlePsqlErrors = (err, req, res, next) => {
+  if (err.code === '23505' && /username/.test(err.detail)) {
+    res.status(400).send({ msg: 'Username already in use' });
+  } else next(err);
+};
+
 exports.handleInternalErrors = (err, req, res, next) => {
   console.log(err, '<< 500 unhandled error');
   res.status(500).send({ msg: 'Internal Server Error' });
