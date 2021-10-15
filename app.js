@@ -7,6 +7,7 @@ const app = express();
 const apiRouter = require('./routes/api.js');
 const {
   handleCustomErrors,
+  handlePsqlErrors,
   handleInternalErrors,
 } = require('./controllers/errors');
 
@@ -25,6 +26,7 @@ app.all('/*', (req, res, next) => {
 });
 
 app.use(handleCustomErrors);
+app.use(handlePsqlErrors);
 app.use(handleInternalErrors);
 
 module.exports = app;

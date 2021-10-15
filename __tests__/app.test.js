@@ -104,6 +104,17 @@ describe('POST /api/users', () => {
 
     expect(body.msg).toBe('Unexpected additional key: extra');
   });
+  it('400 - for duplicate username', async () => {
+    const { body } = await request(app)
+      .post('/api/users')
+      .send({
+        username: 'Ant',
+        avatar_url: 'https://test.com/ant.jpg',
+      })
+      .expect(400);
+
+    expect(body.msg).toBe('Username already in use');
+  });
 });
 
 describe('GET /api/users/:username', () => {
