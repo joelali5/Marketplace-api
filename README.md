@@ -40,3 +40,5 @@ The original idea was to act like facebook marketplace where users would post it
 - [x] price queries on GET /api/items
 - [ ] add posted by to items
 - [ ] exclude a users own items from available items?
+- [ ] update docs: category_name is required on POST:/api/items
+- [ ] associate items with users
