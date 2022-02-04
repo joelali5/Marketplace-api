@@ -304,7 +304,6 @@ describe('GET /api/items', () => {
     expect(item3.item_id).toBe(3);
     expect(item4.item_id).toBe(4);
   });
-
   it('400 - if both limit and p are not passed', async () => {
     const { body } = await request(app)
       .get('/api/items?sort_by=item_id&limit=2')
@@ -426,6 +425,20 @@ describe('POST /api/items', () => {
       })
       .expect(404);
     expect(body.msg).toBe('category not found');
+  });
+  it('400 - price too large', async () => {
+    const oneMoreThanMaxPostgresInt = 2147483648;
+    const { body } = await request(app)
+      .post('/api/items')
+      .send({
+        item_name: 'Test item',
+        description: 'testy mc test face',
+        img_url: 'https://test.com/Test-item.jpg',
+        price: oneMoreThanMaxPostgresInt,
+        category_name: 'Relics',
+      })
+      .expect(400);
+    expect(body.msg).toBe('price must be less than 2147483648');
   });
 });
 

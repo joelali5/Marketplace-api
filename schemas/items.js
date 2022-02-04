@@ -22,7 +22,8 @@ exports.newItem = yup
     item_name: yup.string().max(255).required(),
     description: yup.string().max(500),
     img_url: yup.string().required(),
-    price: yup.number().integer().required(),
+    // less than max postgres int size
+    price: yup.number().integer().required().lessThan(2147483648),
     category_name: yup.string().required(),
   })
   .test('no-unknown', 'Unknown keys', noAdditionalKeys);
