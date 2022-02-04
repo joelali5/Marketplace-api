@@ -17,6 +17,8 @@ exports.handleCustomErrors = (err, req, res, next) => {
 exports.handlePsqlErrors = (err, req, res, next) => {
   if (err.code === '23505' && /username/.test(err.detail)) {
     res.status(400).send({ msg: 'Username already in use' });
+  } else if (err.code === '22003') {
+    res.status(400).send({ msg: 'Max integer size exceeded' });
   } else next(err);
 };
 
