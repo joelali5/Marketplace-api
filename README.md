@@ -1,44 +1,104 @@
 # NC Marketplace api for FE sprint
 
-This is an express server for the students to use during the [fe-nc-marketplace sprint](https://github.com/northcoders/fe-nc-marketplace)
+This is an express server for use with the [fe-nc-marketplace sprint](https://github.com/northcoders/fe-nc-marketplace)
 
-## Hosting
+The api and database have been created in this repo and you will need to host your own version of it to work with on this sprint.
 
-The server and db are hosted on the dev team heroku account.
+Follow the instructions below to get it setup:
 
-[https://nc-marketplace.herokuapp.com/](https://nc-marketplace.herokuapp.com/)
+# Hosting this API on heroku
 
-### Deployment
+In order to use this API for your sprint you will need to fork this repo and host your own version of the app
 
-Continuous deployment is setup from the `main` branch of this repo. Any pushes to this branch will be deployed.
+## Hosting a PSQL DB using Heroku
+
+This repo is setup to be hosted on heroku. Follow the steps below to get your own copy of the api up and running.
+
+## 1. Install the Heroku CLI
+
+Install the heroku cli if you haven't already.
+
+```bash
+npm i heroku -g
+```
+
+## 2. Create a Heroku App
+
+Log into Heroku using their command line interface if you are not already logged in:
+
+```bash
+heroku login
+```
+
+Clone your fork of this repo and `cd` into the new directory. From there create an app on heroku using the cli.
+
+```bash
+heroku create your-app-name
+```
+
+Here `your-app-name` should be the name you want to give your application. If you don't specify an app name, you'll get a random one which can sometimes be a bit iffy.
+
+This command will both create an app on Heroku for your account. It will also add a new `remote` to your git repository.
+Check this by looking at your git remotes:
+
+```bash
+git remote -v
+```
+
+## 3. Push Your code up to Heroku
+
+```bash
+git push heroku main
+```
+
+## 4. Creating a Hosted Database
+
+Go to the heroku site and log in.
+
+- Select your application
+- `Configure Add-ons`
+- Choose `Heroku Postgres`
+
+The free tier will be adequate for our purposes. This will provide you with a `postgreSQL` pre-created database!
+
+Check that the database exists. Click `settings` on it, and view the credentials. Keep an eye on the URI. Don't close this yet!
+
+## 5. Seeding the Production Database
+
+Check that your database's url is added to the environment variables on Heroku:
+
+```bash
+heroku config:get DATABASE_URL
+```
+
+If you are in your app's directory, and the database is correctly linked as an add on to Heroku, it should display a DB URI string that is exactly the same as the one in your credentials.
+
+Make sure to **run the seed prod script** from your `package.json`:
+
+```bash
+npm install
+
+npm run seed-prod
+```
+
+## 6. Review Your App
+
+View your hosted app by visiting your apps URL on heroku or using the `heroku open` command. You should see the docs for your API on the homepage and a path such as `/api/items` should return some results from the database.
+
+```bash
+heroku open
+```
+
+Any issues should be debugged with:
+
+```bash
+heroku logs --tail
+```
 
 ### Seeding
 
-There are `seed-dev` and `seed-prod` scripts for manual seeding. As the sprint involves students all working from the DB and accidental infinite loops and the like are common there is a endpoint to reseed the db back to the initial state. This isn't in the students api ref, just to make our lives easier.
-
-```bash
-POST /api/reset
-```
+There are `seed-dev` and `seed-prod` scripts for seeding the database. If you mess up your data and want to reset it at any point use the `seed-prod` script to return to the initial state.
 
 ## Docs
 
-API docs are written using [Docusaurus](https://docusaurus.io/) and hosted on the path '/'.
-
-### Updating docs
-
-The docs site is a React app. Navigate to /docs for the source code. Edit the markdown files in /docs to update the site. You can start a dev version using `npm run dev-docs` to check your changes. See the [docusaurus docs](https://docusaurus.io/docs/docs-introduction) for the markdown format.
-
-Once updated run the build script `npm run build-docs` and re-deploy the repo.
-
-## Further Development
-
-The original idea was to act like facebook marketplace where users would post items that would then be bought by other users. This would mean ordered items are removed from the available items on GET /api/items. Decided against this for simplicity during the sprint so items can be added to the basket or ordered multiple times without removing them from the list causing students to run out of items.
-
-### TODO
-
-- [ ] add more dev data to make it interesting
-- [x] price queries on GET /api/items
-- [ ] add posted by to items
-- [ ] exclude a users own items from available items?
-- [ ] update docs: category_name is required on POST:/api/items
-- [ ] associate items with users
+The documentation for the api is hosted on the path `/`. This contains a complete API reference with all of the endpoints available.
