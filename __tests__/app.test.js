@@ -220,11 +220,11 @@ describe('PATCH /api/users/:username', () => {
 });
 
 describe('GET /api/items', () => {
-  it('200 - responds with all items', async () => {
+  it('200 - responds with an array of items', async () => {
     const { body } = await request(app).get('/api/items').expect(200);
 
     expect(body.items).toBeArray();
-    expect(body.items.length).toBe(8);
+    expect(body.items.length).toBe(6);
 
     body.items.forEach((item) => {
       expect(item).toEqual(
@@ -238,9 +238,18 @@ describe('GET /api/items', () => {
       );
     });
   });
+  it('200 - ordered items are excluded from the results', async () => {
+    const orderedItemIds = [5, 6];
+    const { body } = await request(app).get('/api/items').expect(200);
+
+    orderedItemIds.forEach((orderedId) => {
+      const orderedItem = body.items.find(({ id }) => id === orderedId);
+      expect(orderedItem).toBe(undefined);
+    });
+  });
   it('200 - responds with a total item count', async () => {
     const { body } = await request(app).get('/api/items').expect(200);
-    expect(body.total_items).toBe(8);
+    expect(body.total_items).toBe(6);
   });
   it('200 - items are sorted by item name by default', async () => {
     const { body } = await request(app).get('/api/items').expect(200);
@@ -293,7 +302,7 @@ describe('GET /api/items', () => {
     const { body } = await request(app)
       .get('/api/items?sort_by=item_id&limit=2&p=2')
       .expect(200);
-    expect(body.total_items).toBe(8);
+    expect(body.total_items).toBe(6);
   });
   it('200 - results can be paginated with a limit and p query', async () => {
     const { body } = await request(app)
@@ -339,18 +348,18 @@ describe('GET /api/items', () => {
     const { body } = await request(app)
       .get('/api/items?max_price=3500')
       .expect(200);
-    expect(body.items.length).toBe(5);
+    expect(body.items.length).toBe(4);
     body.items.forEach((item) => {
       expect(item.price).toBeLessThan(3500);
     });
   });
   it('200 - items equal to the max_price are included', async () => {
     const { body } = await request(app)
-      .get('/api/items?max_price=1099')
+      .get('/api/items?max_price=1599')
       .expect(200);
     expect(body.items.length).toBe(1);
     body.items.forEach((item) => {
-      expect(item.price).toBe(1099);
+      expect(item.price).toBe(1599);
     });
   });
   it('400 - for invalid max_price', async () => {

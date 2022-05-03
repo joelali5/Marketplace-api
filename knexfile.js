@@ -6,7 +6,7 @@ const { DATABASE_URL } = process.env;
 const dbConfig = {
   client: 'pg',
   connection: {
-    connectionString: DATABASE_URL,
+    database: NODE_ENV === 'test' ? 'nc_marketplace_test' : 'nc_marketplace',
   },
   migrations: {
     directory: './db/migrations',
@@ -17,8 +17,11 @@ const dbConfig = {
 };
 
 if (NODE_ENV === 'production') {
-  dbConfig.connection.ssl = {
-    rejectUnauthorized: false,
+  dbConfig.connection = {
+    connectionString: DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
   };
 }
 
