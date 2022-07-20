@@ -16,37 +16,44 @@ module.exports = [
   },
   {
     username: 'Alexandra14',
-    avatar_url: 'https://cdn.fakercloud.com/avatars/klefue_128.jpg',
+    avatar_url:
+      'https://robohash.org/7744246898809c7626aae7e1a18d767a?set=set4&bgset=&size=400x400',
     kudos: 18,
   },
   {
     username: 'Marcus.Langworth78',
-    avatar_url: 'https://cdn.fakercloud.com/avatars/robturlinckx_128.jpg',
+    avatar_url:
+      'https://gravatar.com/avatar/4941efc24c6e006fd293ea111c4f4481?s=400&d=robohash&r=x',
     kudos: 0,
   },
   {
     username: 'Ruth91',
-    avatar_url: 'https://cdn.fakercloud.com/avatars/reetajayendra_128.jpg',
+    avatar_url:
+      'https://gravatar.com/avatar/4941efc24c6e006fd293ea111c4f4481?s=400&d=identicon&r=x',
     kudos: 1,
   },
   {
     username: 'Noelia.Kovacek58',
-    avatar_url: 'https://cdn.fakercloud.com/avatars/aroon_sharma_128.jpg',
+    avatar_url:
+      'https://gravatar.com/avatar/f26ab792d5f3eb93f9e43cd06176629e?s=400&d=wavatar&r=x',
     kudos: 3,
   },
   {
     username: 'Maurine_Schulist85',
-    avatar_url: 'https://cdn.fakercloud.com/avatars/victor_haydin_128.jpg',
+    avatar_url:
+      'https://gravatar.com/avatar/27bd52156e070812745167239284cf3f?s=400&d=robohash&r=x',
     kudos: 3,
   },
   {
     username: 'Kristina.Stokes10',
-    avatar_url: 'https://cdn.fakercloud.com/avatars/Chakintosh_128.jpg',
+    avatar_url:
+      'https://gravatar.com/avatar/7623162e35f8ebd7fcd5832d69e4316b?s=400&d=robohash&r=x',
     kudos: 17,
   },
   {
     username: 'Taylor.Kling',
-    avatar_url: 'https://cdn.fakercloud.com/avatars/kohette_128.jpg',
+    avatar_url:
+      'https://gravatar.com/avatar/7623162e35f8ebd7fcd5832d69e4316b?s=400&d=mp&r=x',
     kudos: 2,
   },
 ];
