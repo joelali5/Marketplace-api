@@ -13,7 +13,7 @@ exports.selectItems = async ({
   return db('items')
     .select('*')
     .where('item_id', 'NOT IN', db('orders').select('item_id'))
-    .orderBy(sort_by, order)
+
     .modify((query) => {
       if (category_name) query.where({ category_name });
       if (limit && p) {
@@ -21,8 +21,32 @@ exports.selectItems = async ({
         query.offset(+limit * (p - 1));
       }
       if (search) {
-        query.where('item_name', 'ILIKE', `%${search}%`);
+        query.select(
+          db.raw(`SIMILARITY(?, item_name) AS item_name_relevance`, [search])
+        );
+        query.select(
+          db.raw(`SIMILARITY(?, category_name) AS category_name_relevance`, [
+            search,
+          ])
+        );
+        query.select(
+          db.raw(`SIMILARITY(?, description) AS description_relevance`, [
+            search,
+          ])
+        );
+        query.where(
+          db.raw(
+            `to_tsvector(item_name || ' ' || description || ' ' || category_name) @@ websearch_to_tsquery(?) 
+            OR SIMILARITY(?, item_name) > 0.1
+            OR SIMILARITY(?, category_name) > 0.1 
+            OR SIMILARITY(?, description) > 0.1`,
+            [search, search, search, search]
+          )
+        );
+        // apply search ordering before query ordering
+        query.orderBy('item_name_relevance', 'DESC');
       }
+      query.orderBy(sort_by, order);
       if (min_price) query.where('price', '>=', min_price);
       if (max_price) query.where('price', '<=', max_price);
     });

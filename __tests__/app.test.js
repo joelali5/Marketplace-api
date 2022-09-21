@@ -268,6 +268,54 @@ describe('GET /api/items', () => {
     const itemNames = body.items.map((item) => item.item_name);
     expect(itemNames).toIncludeAllMembers(['The Holy Grail']);
   });
+  it('200 - items are filtered by an unordered match', async () => {
+    const { body } = await request(app)
+      .get('/api/items?search=yarn ball')
+      .expect(200);
+    const itemNames = body.items.map((item) => item.item_name);
+    expect(itemNames).toIncludeAllMembers(['Worlds largest ball of yarn']);
+  });
+  it('200 - items are filtered by both cases of the word or', async () => {
+    const { body } = await request(app)
+      .get('/api/items?search=yarn or Holy')
+      .expect(200);
+    const itemNames = body.items.map((item) => item.item_name);
+    expect(itemNames).toIncludeAllMembers([
+      'Worlds largest ball of yarn',
+      'The Holy Grail',
+    ]);
+  });
+  it('200 - items are filtered by a case-insensitive search', async () => {
+    const { body } = await request(app)
+      .get('/api/items?search=holy')
+      .expect(200);
+    const itemNames = body.items.map((item) => item.item_name);
+    expect(itemNames).toIncludeAllMembers(['The Holy Grail']);
+  });
+  it('200 - items can be searched by description', async () => {
+    const { body } = await request(app)
+      .get('/api/items?search=booze')
+      .expect(200);
+    const itemNames = body.items.map((item) => item.item_name);
+    expect(itemNames).toIncludeAllMembers(['Drinks Globe']);
+  });
+  it('200 - items can be searched by category', async () => {
+    const { body } = await request(app)
+      .get('/api/items?search=relics')
+      .expect(200);
+    const itemNames = body.items.map((item) => item.item_name);
+    expect(itemNames).toIncludeAllMembers([
+      'The Holy Grail',
+      'The sword of 1000 truths',
+    ]);
+  });
+  it('200 - items are fuzzy matched based on pg_trgm', async () => {
+    const { body } = await request(app)
+      .get('/api/items?search=holly')
+      .expect(200);
+    const itemNames = body.items.map((item) => item.item_name);
+    expect(itemNames).toIncludeAllMembers(['The Holy Grail']);
+  });
   it('400 - for invalid sort_by', async () => {
     const { body } = await request(app)
       .get('/api/items?sort_by=invalid')
@@ -302,6 +350,7 @@ describe('GET /api/items', () => {
     const { body } = await request(app)
       .get('/api/items?sort_by=item_id&limit=2&p=2')
       .expect(200);
+
     expect(body.total_items).toBe(6);
   });
   it('200 - results can be paginated with a limit and p query', async () => {
